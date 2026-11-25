@@ -1,0 +1,164 @@
+#include <stdio.h>
+#include <string.h>
+
+struct Record
+{
+int id;
+char name[50];
+char department[50];
+float salary;
+};
+
+struct Record emp[100];
+int count = 0;
+
+void addRecord()
+{
+if (count >= 100)
+{
+printf("\nRecord limit reached!");
+return;
+}
+
+printf("\nEnter ID: ");
+scanf("%d", &emp[count].id);
+
+printf("Enter Name: ");
+scanf(" %[^\n]", emp[count].name);
+
+printf("Enter Department: ");
+scanf(" %[^\n]", emp[count].department);
+
+printf("Enter Salary: ");
+scanf("%f", &emp[count].salary);
+
+count++;
+
+printf("\nRecord Added Successfully!\n");
+
+}
+
+void displayRecords()
+{
+int i;
+
+if (count == 0)
+{
+    printf("\nNo Records Available!\n");
+    return;
+}
+
+printf("\n------ EMPLOYEE DETAILS ------\n");
+
+for (i = 0; i < count; i++)
+{
+    printf("\nID         : %d", emp[i].id);
+    printf("\nName       : %s", emp[i].name);
+    printf("\nDepartment : %s", emp[i].department);
+    printf("\nSalary     : %.2f\n", emp[i].salary);
+}
+
+}
+
+void searchRecord()
+{
+int id, i, found = 0;
+
+printf("\nEnter ID to Search: ");
+scanf("%d", &id);
+
+for (i = 0; i < count; i++)
+{
+    if (emp[i].id == id)
+    {
+        printf("\nRecord Found!");
+        printf("\nName       : %s", emp[i].name);
+        printf("\nDepartment : %s", emp[i].department);
+        printf("\nSalary     : %.2f\n", emp[i].salary);
+
+        found = 1;
+        break;
+    }
+}
+
+if (found == 0)
+    printf("\nRecord Not Found!\n");
+
+}
+
+void deleteRecord()
+{
+int id, i, j, found = 0;
+
+printf("\nEnter ID to Delete: ");
+scanf("%d", &id);
+
+for (i = 0; i < count; i++)
+{
+    if (emp[i].id == id)
+    {
+        for (j = i; j < count - 1; j++)
+        {
+            emp[j] = emp[j + 1];
+        }
+
+        count--;
+        found = 1;
+
+        printf("\nRecord Deleted Successfully!\n");
+        break;
+    }
+}
+
+if (found == 0)
+    printf("\nRecord Not Found!\n");
+
+}
+
+int main()
+{
+int choice;
+
+do
+{
+    printf("\n===== LINEAR MANAGEMENT SYSTEM =====");
+    printf("\n1. Add Record");
+    printf("\n2. Display Records");
+    printf("\n3. Search Record");
+    printf("\n4. Delete Record");
+    printf("\n5. Exit");
+
+    printf("\n\nEnter Your Choice: ");
+    scanf("%d", &choice);
+
+    switch (choice)
+    {
+        case 1:
+            addRecord();
+            break;
+
+        case 2:
+            displayRecords();
+            break;
+
+        case 3:
+            searchRecord();
+            break;
+
+        case 4:
+            deleteRecord();
+            break;
+
+        case 5:
+            printf("\nProgram Terminated.");
+            break;
+
+        default:
+            printf("\nInvalid Choice!");
+    }
+
+} while (choice != 5);
+
+return 0;
+
+}
